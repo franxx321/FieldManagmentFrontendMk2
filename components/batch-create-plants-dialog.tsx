@@ -37,6 +37,7 @@ export function BatchCreatePlantsDialog({
   const [speciesId, setSpeciesId] = useState("")
   const [count, setCount] = useState("")
   const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState<Plant["status"]>("HEALTHY")
   const [error, setError] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,9 +47,10 @@ export function BatchCreatePlantsDialog({
 
     try {
       const plants = await batchCreatePlants({
-        row_id: rowId,
-        species_id: speciesId,
-        count: Number.parseInt(count),
+        plotRowId: rowId,
+        speciesId: speciesId,
+        quantity: Number.parseInt(count),
+        status: status,
       })
       onPlantsCreated(plants)
       setSpeciesId("")
@@ -84,7 +86,20 @@ export function BatchCreatePlantsDialog({
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
+              <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <Select value={status} onValueChange={(value: Plant["status"]) => setStatus(value)} disabled={loading}>
+                      <SelectTrigger>
+                          <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem value="HEALTHY">Healthy</SelectItem>
+                          <SelectItem value="DISEASED">Diseased</SelectItem>
+                          <SelectItem value="NEEDSATTENTION">Needs Attention</SelectItem>
+                      </SelectContent>
+                  </Select>
+              </div>
+              <div className="space-y-2">
               <Label htmlFor="count">Number of Plants</Label>
               <Input
                 id="count"

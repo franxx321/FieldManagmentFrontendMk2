@@ -147,7 +147,7 @@ export async function createPlant(plant: {
   return response.json()
 }
 
-export async function batchCreatePlants(plants: { row_id: string; species_id: string; count: number }) {
+export async function batchCreatePlants(plants: { plotRowId: string; speciesId: string; quantity: number; status: "HEALTHY" | "DISEASED" | "NEEDSATTENTION"  }) {
   const response = await fetch(`${API_BASE_URL}/plants/batch`, {
     method: "POST",
     headers: {

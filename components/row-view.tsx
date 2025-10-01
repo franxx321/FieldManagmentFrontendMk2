@@ -150,7 +150,25 @@ export function RowView({ row, plot, farm, onBack }: RowViewProps) {
                   </Button>
                 </div>
               </div>
-
+              {/* Summary by common name */}
+              {plants.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(
+                    plants.reduce<Record<string, number>>((acc, p) => {
+                      const key = p.speciesCommonName ?? "Unknown";
+                      acc[key] = (acc[key] || 0) + 1;
+                      return acc;
+                    }, {})
+                  )
+                    .sort(([aName], [bName]) => aName.localeCompare(bName))
+                    .map(([name, count]) => (
+                      <Badge key={name} variant="secondary">
+                        {name}: {count}
+                      </Badge>
+                    ))}
+                </div>
+              )}
+              {/* End summary */}
               {plants.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">

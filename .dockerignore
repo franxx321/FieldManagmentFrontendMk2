@@ -1,0 +1,8 @@
+node_modules
+.next/cache
+.next/standalone
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+*.log

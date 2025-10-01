@@ -1,24 +1,13 @@
 "use client"
 
-import { useAuth } from "@/hooks/use-auth"
-import { LoginForm } from "@/components/login-form"
-import { FarmDashboard } from "@/components/farm-dashboard"
-import { Loader2 } from "lucide-react"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
-export default function HomePage() {
-  const { user, loading } = useAuth()
+export default function Home() {
+    const router = useRouter()
+    useEffect(() => {
+        router.replace("/dashboard")
+    }, [router])
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <LoginForm />
-  }
-
-  return <FarmDashboard />
+    return null
 }

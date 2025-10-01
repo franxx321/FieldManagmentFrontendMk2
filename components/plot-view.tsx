@@ -11,6 +11,7 @@ import { CreateRowDialog } from "@/components/create-row-dialog"
 import { EditPlotDialog } from "@/components/edit-plot-dialog"
 import { AddActionDialog } from "@/components/add-action-dialog"
 import { RowView } from "@/components/row-view"
+import {useSearchParams, useRouter} from "next/navigation"
 
 import { Loader2, Plus, ArrowLeft, Settings, Activity, Grid3X3, Calendar } from "lucide-react"
 
@@ -29,6 +30,7 @@ export function PlotView({ plot, farm, onBack }: PlotViewProps) {
   const [showCreateRowDialog, setShowCreateRowDialog] = useState(false)
   const [showEditPlotDialog, setShowEditPlotDialog] = useState(false)
   const [showAddActionDialog, setShowAddActionDialog] = useState(false)
+    const router = useRouter()
 
   useEffect(() => {
     loadData()
@@ -63,6 +65,10 @@ export function PlotView({ plot, farm, onBack }: PlotViewProps) {
 
   if (selectedRow) {
     return <RowView row={selectedRow} plot={plot} farm={farm} onBack={() => setSelectedRow(null)} />
+  }
+
+  const handleRowClick = (rowId: string) => {
+      router.push(`${plot.id}/rows/${rowId}`)
   }
 
   return (
@@ -133,7 +139,7 @@ export function PlotView({ plot, farm, onBack }: PlotViewProps) {
                     <Card
                       key={row.id}
                       className="cursor-pointer hover:bg-accent/50 transition-colors"
-                      onClick={() => setSelectedRow(row)}
+                      onClick={() => handleRowClick(row.id)}
                     >
                       <CardHeader>
                         <div className="flex items-center justify-between">

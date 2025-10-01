@@ -13,6 +13,7 @@ import { EditRowDialog } from "@/components/edit-row-dialog"
 import { AddActionDialog } from "@/components/add-action-dialog"
 import { PlantView } from "@/components/plant-view"
 import { Loader2, Plus, ArrowLeft, Settings, Activity, Sprout, Calendar, Users } from "lucide-react"
+import {useSearchParams, useRouter} from "next/navigation"
 
 interface RowViewProps {
   row: Row
@@ -32,6 +33,7 @@ export function RowView({ row, plot, farm, onBack }: RowViewProps) {
   const [showBatchCreateDialog, setShowBatchCreateDialog] = useState(false)
   const [showEditRowDialog, setShowEditRowDialog] = useState(false)
   const [showAddActionDialog, setShowAddActionDialog] = useState(false)
+    const router = useRouter()
 
   useEffect(() => {
     loadData()
@@ -71,6 +73,7 @@ export function RowView({ row, plot, farm, onBack }: RowViewProps) {
     setShowAddActionDialog(false)
   }
 
+
   const getStatusColor = (status: Plant["status"]) => {
     switch (status) {
       case "HEALTHY":
@@ -86,6 +89,10 @@ export function RowView({ row, plot, farm, onBack }: RowViewProps) {
 
   if (selectedPlant) {
     return <PlantView plant={selectedPlant} row={row} plot={plot} farm={farm} onBack={() => setSelectedPlant(null)} />
+  }
+
+  const handlePlantClick = (plantId: string) => {
+      router.push(`${row.id}/plants/${plantId}`)
   }
 
   return (
@@ -168,7 +175,7 @@ export function RowView({ row, plot, farm, onBack }: RowViewProps) {
                     <Card
                       key={plant.id}
                       className="cursor-pointer hover:bg-accent/50 transition-colors"
-                      onClick={() => setSelectedPlant(plant)}
+                      onClick={() => handlePlantClick(plant.id)}
                     >
                       <CardHeader className="pb-3">
                         <div className="flex items-center justify-between">

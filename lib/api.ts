@@ -37,6 +37,14 @@ export async function getFarms() {
   return response.json()
 }
 
+export async function getFarm(id: string) {
+  const response = await fetch(`${API_BASE_URL}/farms/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  })
+    return response.json()
+}
+
+
 export async function createFarm(farm: { name: string; location: string; area: number }) {
   const response = await fetch(`${API_BASE_URL}/farms`, {
     method: "POST",
@@ -55,6 +63,13 @@ export async function getPlots(farmId: string) {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   })
   return response.json()
+}
+
+export async function getPlot(id: string) {
+    const response = await fetch(`${API_BASE_URL}/plots/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+    return response.json()
 }
 
 export async function createPlot(plot: {
@@ -98,6 +113,13 @@ export async function getRows(plotId: string) {
   return response.json()
 }
 
+export async function getRow(id: string) {
+    const response = await fetch(`${API_BASE_URL}/plot_rows/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+    return response.json()
+}
+
 export async function createRow(row: { name: string; length: number; width: number; plot_id: string }) {
   const response = await fetch(`${API_BASE_URL}/plot_rows`, {
     method: "POST",
@@ -128,6 +150,13 @@ export async function getPlants(rowId: string) {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   })
   return response.json()
+}
+
+export async function getPlant(id: string) {
+    const response = await fetch(`${API_BASE_URL}/plants/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+    return response.json()
 }
 
 export async function createPlant(plant: {
